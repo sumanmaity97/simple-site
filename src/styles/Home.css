@@ -1,0 +1,129 @@
+.home-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: white;
+    flex-direction: row;
+    /* Stack children vertically */
+    align-items: center;
+    /* Center them horizontally */
+    align-items: center;
+    justify-content: center;
+}
+
+.note {
+    color: black;
+}
+
+.note-area {
+    padding: 10px;
+    width: 250px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: transparent;
+    color: black;
+    outline: "none";
+}
+
+.add-note-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    width: 200px;
+    font-size: 16px;
+    color: white;
+    background-color: #f53131;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-note-button:hover {
+    background-color: #f9a3a3;
+}
+
+.note-input-card {
+    border: 1px solid;
+    border-color: rgb(106, 104, 103);
+    border-radius: 5px;
+    padding: 10px 20px 30px 20px;
+    pointer-events: all;
+}
+
+.not-found-card {
+    border: 1px solid;
+    border-color: rgb(106, 104, 103);
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    pointer-events: all;
+    min-width: 200px;
+}
+
+.notes-wrap {
+    /* display: flex; */
+    cursor: pointer;
+}
+
+.note-card {
+    border: 1px solid;
+    border-color: rgb(66, 65, 64);
+    border-radius: 5px;
+    width: 300px;
+    padding: 10px;
+    text-align: left;
+    max-height: 70vh;
+    overflow-y: scroll;
+    scrollbar-color: #f9a3a3 #f53131;
+}
+
+.note-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between checkbox and text */
+    cursor: pointer;
+}
+
+.note-item input {
+    pointer-events: all;
+    /* Ensure checkbox is clickable */
+}
+
+.clear-btn-wrap {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.clear-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    width: 150px;
+    font-size: 16px;
+    color: white;
+    background-color: #f53131;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    pointer-events: all;
+    /* Ensure button clicks work */
+}
+
+.clear-button:hover {
+    background-color: #f9a3a3;
+}
+
+.scroll-view{
+    overflow-y: scroll;
+}
+
+.space {
+    width: 100px;
+}
