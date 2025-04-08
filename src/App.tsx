@@ -10,6 +10,7 @@ import Profile from './screens/Profile';
 import PrivateRoute from './utils/PrivateRoute';
 import Navbar from './component/Navbar';
 import Footer from './component/Footer';
+import EditProfile from './screens/EditProfile';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
 
             {/* Private Routes */}
             <Route path="/profile" element={<PrivateRoute Component={Profile} />} />
+            <Route path="/editProfile" element={<PrivateRoute Component={EditProfile} />} />
           </Routes>
         </div>
         <Footer />

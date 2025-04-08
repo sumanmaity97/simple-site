@@ -2,9 +2,12 @@ import React, { useRef, useState } from "react";
 import '../styles/Login.css';
 import { showToast } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import { API } from "../utils/api";
+import { API, setAuthToken } from "../utils/api";
+import { useUser } from "../context/UserContext";
 
 function Login() {
+
+    const { updateUser, clearUser } = useUser();
 
     const passRef = useRef<any>(null);
     const navigate = useNavigate();
@@ -35,13 +38,15 @@ function Login() {
             }
 
             try {
-                const response = await API.post('auth/login', inputs);
+                const response: any = await API.post('auth/login', inputs);
                 console.log("LOGIN RES: ", response);
-                if (response?.data?.isAuthenticated) {
+                if (response?.isAuthenticated) {
                     setPassError('');
                     setEmailError('');
-                    localStorage.setItem('userData', JSON.stringify(response?.data?.user));
-                    localStorage.setItem('token', response?.data?.token);
+                    localStorage.setItem('userData', JSON.stringify(response?.user));
+                    updateUser(response.user);
+                    localStorage.setItem('token', response?.token);
+                    setAuthToken(response?.token);
                     window.dispatchEvent(new Event("storage"));
                     showToast('Successfully logged in!', "success");
                     navigate("/home");
@@ -52,6 +57,7 @@ function Login() {
                 if (error?.response?.data?.msg) {
                     showToast(error.response.data.msg, "error");
                 }
+                clearUser();
             }
         } else {
             if (!password) {
@@ -66,7 +72,7 @@ function Login() {
     return (
         <div className="fullscreen-background">
             <div className="login-card" >
-                <h3>Login</h3>
+                <h3>Login to Your Account</h3>
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <input
                         type="email"

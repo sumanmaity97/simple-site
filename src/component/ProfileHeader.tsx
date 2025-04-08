@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Avatar, Card, CardContent, Typography, Button, Popover } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const ProfileHeader = ({profile}) => {
+const ProfileHeader = ({profile}: {profile: any}) => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
+    const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
 

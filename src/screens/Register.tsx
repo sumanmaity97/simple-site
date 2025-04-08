@@ -88,18 +88,21 @@ function Register() {
         if (!emailError && email && password && name && rePassword && password === rePassword) {
             let inputs = {
                 username: name,
+                // profileData: {name},
                 email,
                 password
             }
             try {
                 const response: any = await API.post('auth/register', inputs);
                 console.log("REG RES: ", response);
-                showToast('Successfully registered!', "success");
-                setNameError('');
-                setPassError('');
-                setEmailError('');
-                setRePassError('');
-                navigate('/login');
+                if (response) {
+                    showToast('Successfully registered!', "success");
+                    setNameError('');
+                    setPassError('');
+                    setEmailError('');
+                    setRePassError('');
+                    navigate('/login');
+                }
             } catch (error: any) {
                 // showToast("Something went wrong!", "error");
                 if (error?.response?.data?.msg) {
@@ -128,7 +131,7 @@ function Register() {
     return (
         <div className="fullscreen-background">
             <div className="login-card" >
-                <h3>Registration</h3>
+                <h3>Create an Account</h3>
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <input
                         type="text"
@@ -233,6 +236,9 @@ function Register() {
                 >
                     Submit
                 </button>
+                <div className="mar-top">
+                    <a className="dont-text" onClick={() => navigate("/login")}>Already have an account? Login</a>
+                </div>
             </div>
         </div>
     )
