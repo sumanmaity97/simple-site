@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import '../styles/Login.css';
-import { useNavigate } from "react-router-dom";
 import { showToast } from "../utils/helpers";
 import { API } from "../utils/api";
 import { useUser } from "../context/UserContext";
 import { IUser } from "../../types";
+import { useApp } from "../context/AppContext";
 
 function EditProfile() {
-    const navigate = useNavigate();
 
-    const { user, updateUser, clearUser } = useUser();
+    const { user, updateUser } = useUser();
+    const { isLoggedIn } = useApp();
 
     const emailRef = useRef<any>(null);
     const hasFetchedRef = useRef(false);
@@ -24,32 +24,21 @@ function EditProfile() {
     useEffect(() => {
         if (!hasFetchedRef.current) {
             hasFetchedRef.current = true;
-            getProfileData();
+            setData();
         }
     }, []);
 
-    const getProfileData = async () => {
+    const setData = async () => {
         try {
             console.log(user);
-            const response: any = await API.get(`auth/profile/${user?._id}`);
-            console.log("PPPP: ", response);
-            let tempUser: IUser = { ...user } as IUser;
-            tempUser.profileData = response.profileData;
-            setName(response?.profileData?.name);
+            setName(user?.profileData?.name);
             setEmail(user?.email);
-            setDob(response?.profileData?.dob);
-            setImage(response?.profileData?.profilePic);
+            setDob(user?.profileData?.dob);
+            setImage(user?.profileData?.profilePic);
+            
         } catch (error) {
 
         }
-    }
-
-    const handleLogout = async () => {
-        localStorage.setItem('userData', '');
-        localStorage.setItem('token', '');
-        window.dispatchEvent(new Event("storage"));
-        showToast('Successfully logged out!', "success");
-        navigate("/login");
     }
 
     const handleSubmit = async () => {
@@ -62,14 +51,16 @@ function EditProfile() {
                     profilePic: image
                 }
             }
-            console.log("INPUTS: ", inputs);
+            console.log("INPUTS: ", isLoggedIn, inputs);
 
             try {
                 const response: any = await API.post('auth/profile/create', inputs);
-                console.log("REG RES: ", response);
+                console.log("EDIT RES: ", response);
                 showToast('Successfully update profile!', "success");
                 let data: IUser = { ...user } as IUser;
-                data.profileData = response?.data?.profileData
+                console.log("BEFORE: ", data);         
+                data.profileData = response?.profileData
+                console.log("AFTER: ", data);                
                 localStorage.setItem('userData', JSON.stringify(data));
                 updateUser(data);
                 setNameError('');

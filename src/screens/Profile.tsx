@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import '../styles/Profile.css';
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../utils/helpers";
@@ -9,14 +9,19 @@ import { IUser } from "../../types";
 function Profile() {
     const navigate = useNavigate();
 
-    const { user, clearUser } = useUser();
+    const { user, clearUser, fetchUser } = useUser();
 
     const hasFetchedRef = useRef(false);
 
     useEffect(() => {
         if (!hasFetchedRef.current) {
             hasFetchedRef.current = true;
-            getProfileData();
+            // getProfileData();
+            console.log(user);
+            
+            if (user?._id){
+                fetchUser(user?._id);
+            }                
         }
     }, []);
 
